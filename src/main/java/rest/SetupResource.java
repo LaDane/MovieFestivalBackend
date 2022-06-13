@@ -28,4 +28,10 @@ public class SetupResource {
                 .ok(GSON.toJson(object))
                 .build();
     }
+
+    @Path("admin")
+    @GET
+    public String grantAdmin() {
+        return "{\"msg\":\"Admin granted to admin user\"}";
+    }
 }

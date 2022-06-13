@@ -1,5 +1,6 @@
 package facades;
 
+import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -73,5 +74,22 @@ public class UserFacade {
             usernames.add(u.getUserName());
         }
         return usernames;
+    }
+
+    public void grantAdmin() throws NotFoundException {
+        User admin = getUserByName("admin");
+        Role adminRole = RoleFacade.getRoleFacade(emf).getRoleByName("admin");
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(adminRole);
+        admin.setRoleList(roleList);
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(admin);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 }

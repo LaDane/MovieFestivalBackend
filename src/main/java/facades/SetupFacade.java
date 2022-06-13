@@ -3,6 +3,7 @@ package facades;
 import entities.Role;
 
 import com.google.gson.JsonObject;
+import entities.User;
 import populators.RolePopulator;
 
 import javax.persistence.EntityManager;
