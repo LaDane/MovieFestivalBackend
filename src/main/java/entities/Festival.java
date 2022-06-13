@@ -1,9 +1,13 @@
 package entities;
 
+import dtos.FestivalDTO;
+import dtos.GuestDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +48,7 @@ public class Festival implements Serializable {
     private java.util.Date duration;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="festival")
-    private List<Guest> guestList;
+    private List<Guest> guestList = new ArrayList<>();
 
     public Festival() {}
 
@@ -53,6 +57,19 @@ public class Festival implements Serializable {
         this.city = city;
         this.startDateTime = startDateTime;
         this.duration = duration;
+    }
+
+    public Festival(FestivalDTO f) {
+        if (f.getId() != null) {
+            this.id = f.getId();
+        }
+        this.name = f.getName();
+        this.city = f.getCity();
+        this.startDateTime = f.getStartDateTime();
+        this.duration = f.getDuration();
+        for (GuestDTO g : f.getGuestList()) {
+            this.guestList.add(new Guest(g));
+        }
     }
 
     public Long getId() {return id;}

@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.GuestDTO;
+import dtos.ShowDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -57,6 +60,19 @@ public class Show implements Serializable {
         this.duration = duration;
         this.location = location;
         this.startDateTime = startDateTime;
+    }
+
+    public Show(ShowDTO s) {
+        if (s.getId() != null) {
+            this.id = s.getId();
+        }
+        this.name = s.getName();
+        this.duration = s.getDuration();
+        this.location = s.getLocation();
+        this.startDateTime = s.getStartDateTime();
+        for (GuestDTO g : s.getGuestList()) {
+            this.guestList.add(new Guest(g));
+        }
     }
 
     public Long getId() {return id;}

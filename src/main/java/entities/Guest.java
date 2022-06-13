@@ -1,5 +1,9 @@
 package entities;
 
+import dtos.FestivalDTO;
+import dtos.GuestDTO;
+import dtos.ShowDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -48,7 +52,7 @@ public class Guest implements Serializable {
 
     @ManyToOne()
     @JoinColumn(name = "festival_id")
-    private Festival continent;
+    private Festival festival;
 
     public Guest() {}
 
@@ -59,13 +63,27 @@ public class Guest implements Serializable {
         this.status = status;
     }
 
+    public Guest(GuestDTO g) {
+        if (g.getId() != null) {
+            this.id = g.getId();
+        }
+        this.name = g.getName();
+        this.phone = g.getPhone();
+        this.email = g.getEmail();
+        this.status = g.getStatus();
+        for (ShowDTO s : g.getShowList()) {
+            this.showList.add(new Show(s));
+        }
+        this.festival = new Festival(g.getFestival());
+    }
+
     public Long getId() {return id;}
     public String getName() {return name;}
     public String getPhone() {return phone;}
     public String getEmail() {return email;}
     public String getStatus() {return status;}
     public List<Show> getShowList() {return showList;}
-    public Festival getContinent() {return continent;}
+    public Festival getFestival() {return festival;}
 
     public void setId(Long id) {this.id = id;}
     public void setName(String name) {this.name = name;}
@@ -74,5 +92,5 @@ public class Guest implements Serializable {
     public void setStatus(String status) {this.status = status;}
     public void setShowList(List<Show> showList) {this.showList = showList;}
     public void addShow(Show s) {this.showList.add(s);}
-    public void setContinent(Festival continent) {this.continent = continent;}
+    public void setContinent(Festival festival) {this.festival = festival;}
 }
