@@ -4,10 +4,7 @@ import Helpers.CreateEntity;
 import Helpers.ResetDB;
 import entities.Festival;
 import errorhandling.NotFoundException;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import populators.RolePopulator;
 import utils.EMF_Creator;
 
@@ -17,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 class FestivalFacadeTest {
 
     private static EntityManagerFactory emf;
