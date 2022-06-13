@@ -3,7 +3,9 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import errorhandling.NotFoundException;
 import facades.SetupFacade;
+import facades.UserFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
@@ -31,7 +33,8 @@ public class SetupResource {
 
     @Path("admin")
     @GET
-    public String grantAdmin() {
+    public String grantAdmin() throws NotFoundException {
+        UserFacade.getUserFacade(EMF).grantAdmin();
         return "{\"msg\":\"Admin granted to admin user\"}";
     }
 }
