@@ -71,10 +71,12 @@ public class Guest implements Serializable {
         this.phone = g.getPhone();
         this.email = g.getEmail();
         this.status = g.getStatus();
-        for (ShowDTO s : g.getShowList()) {
-            this.showList.add(new Show(s));
+//        for (ShowDTO s : g.getShowList()) {
+//            this.showList.add(new Show(s));
+//        }
+        if (g.getFestival() != null) {
+            this.festival = new Festival(g.getFestival());
         }
-        this.festival = new Festival(g.getFestival());
     }
 
     public Long getId() {return id;}
@@ -92,5 +94,5 @@ public class Guest implements Serializable {
     public void setStatus(String status) {this.status = status;}
     public void setShowList(List<Show> showList) {this.showList = showList;}
     public void addShow(Show s) {this.showList.add(s);}
-    public void setContinent(Festival festival) {this.festival = festival;}
+    public void setFestival(Festival festival) {this.festival = festival;}
 }

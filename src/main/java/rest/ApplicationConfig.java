@@ -29,6 +29,10 @@ public class ApplicationConfig extends Application {
 
 //        resources.add(rest.RenameMeResource.class);
         resources.add(rest.DemoResource.class);
-        resources.add(SetupResource.class);
+        resources.add(rest.SetupResource.class);
+
+        resources.add(rest.FestivalResource.class);
+        resources.add(rest.GuestResource.class);
+        resources.add(rest.ShowResource.class);
     }
 }

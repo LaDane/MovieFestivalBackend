@@ -1,4 +1,4 @@
-POST http://localhost:8080/devops_starter_war_exploded/api/login
+POST http://localhost:8080/MovieFestivalBackend_war_exploded/api/login
 Content-Type: application/json
 
 {
@@ -6,3 +6,70 @@ Content-Type: application/json
   "password": "test"
 }
 
+### FESTIVAL
+POST http://localhost:8080/MovieFestivalBackend_war_exploded/api/festival/create
+Content-Type: application/json
+
+{
+  "name": "RestFestival",
+  "city": "RestCity",
+  "startDateTime": {
+    "date": {
+      "year": 2023,
+      "month": 2,
+      "day": 13
+    },
+    "time": {
+      "hour": 20,
+      "minute": 21,
+      "second": 0,
+      "nano:": 0
+    }
+  },
+  "endDateTime": {
+    "date": {
+      "year": 2023,
+      "month": 2,
+      "day": 17
+    },
+    "time": {
+      "hour": 12,
+      "minute": 15,
+      "second": 0,
+      "nano:": 0
+    }
+  },
+  "guestList": []
+}
+
+###
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/festival/1
+Content-Type: application/json
+
+### GUEST
+POST http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/create
+Content-Type: application/json
+
+{
+  "name": "RestGuest",
+  "phone": "123",
+  "email": "rest@guest.com",
+  "status": "attending",
+  "showList": []
+}
+
+###
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1
+Content-Type: application/json
+
+###
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1/show/1
+Content-Type: application/json
+
+###
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1/festival/2
+Content-Type: application/json
+
+###
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1/shows
+Content-Type: application/json

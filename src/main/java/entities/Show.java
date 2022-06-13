@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,12 +32,6 @@ public class Show implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "duration")
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date duration;
-
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "location")
     private String location;
@@ -44,8 +39,16 @@ public class Show implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "start_datetime")
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date startDateTime;
+    private LocalDateTime startDateTime;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private java.util.Date startDateTime;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "end_datetime")
+    private LocalDateTime endDateTime;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private java.util.Date endDateTime;
 
     @JoinTable(name = "shows_guests", joinColumns = {
             @JoinColumn(name = "show_id", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -55,11 +58,11 @@ public class Show implements Serializable {
 
     public Show() {}
 
-    public Show(String name, Date duration, String location, Date startDateTime) {
+    public Show(String name, String location, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         this.name = name;
-        this.duration = duration;
         this.location = location;
         this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
     public Show(ShowDTO s) {
@@ -67,9 +70,9 @@ public class Show implements Serializable {
             this.id = s.getId();
         }
         this.name = s.getName();
-        this.duration = s.getDuration();
         this.location = s.getLocation();
         this.startDateTime = s.getStartDateTime();
+        this.endDateTime = s.getEndDateTime();
         for (GuestDTO g : s.getGuestList()) {
             this.guestList.add(new Guest(g));
         }
@@ -77,16 +80,16 @@ public class Show implements Serializable {
 
     public Long getId() {return id;}
     public String getName() {return name;}
-    public Date getDuration() {return duration;}
     public String getLocation() {return location;}
-    public Date getStartDateTime() {return startDateTime;}
+    public LocalDateTime getStartDateTime() {return startDateTime;}
+    public LocalDateTime getEndDateTime() {return endDateTime;}
     public List<Guest> getGuestList() {return guestList;}
 
     public void setId(Long id) {this.id = id;}
     public void setName(String name) {this.name = name;}
-    public void setDuration(Date duration) {this.duration = duration;}
     public void setLocation(String location) {this.location = location;}
-    public void setStartDateTime(Date startDateTime) {this.startDateTime = startDateTime;}
+    public void setStartDateTime(LocalDateTime startDateTime) {this.startDateTime = startDateTime;}
+    public void setEndDateTime(LocalDateTime endDateTime) {this.endDateTime = endDateTime;}
     public void setGuestList(List<Guest> guestList) {this.guestList = guestList;}
     public void addGuest(Guest g) {this.guestList.add(g);}
 }
