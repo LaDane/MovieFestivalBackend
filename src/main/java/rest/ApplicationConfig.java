@@ -34,5 +34,6 @@ public class ApplicationConfig extends Application {
         resources.add(rest.FestivalResource.class);
         resources.add(rest.GuestResource.class);
         resources.add(rest.ShowResource.class);
+        resources.add(rest.UserResource.class);
     }
 }
