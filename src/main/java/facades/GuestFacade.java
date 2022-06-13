@@ -3,6 +3,7 @@ package facades;
 import entities.Festival;
 import entities.Guest;
 import entities.Show;
+import entities.User;
 import errorhandling.NotFoundException;
 
 import javax.persistence.EntityManager;
@@ -31,6 +32,21 @@ public class GuestFacade implements IFacade<Guest> {
         try {
             em.getTransaction().begin();
             em.persist(guest);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return guest;
+    }
+
+    public Guest create(Guest guest, String username) throws NotFoundException {
+        Guest created = create(guest);
+        User user = UserFacade.getUserFacade(emf).getUserByName(username);
+        user.setGuest(created);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(user);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -129,5 +145,14 @@ public class GuestFacade implements IFacade<Guest> {
         Festival festival = FestivalFacade.getFacade(emf).getById(festivalId);
         guest.setFestival(festival);
         return update(guest);
+    }
+
+    public Guest checkGuestProfile(String username) throws NotFoundException {
+        User user = UserFacade.getUserFacade(emf).getUserByName(username);
+        System.out.println("USER ="+ user.getUserName());
+        if (user.getGuest() != null) {
+            return user.getGuest();
+        }
+        return null;
     }
 }

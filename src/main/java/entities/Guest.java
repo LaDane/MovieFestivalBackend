@@ -54,6 +54,13 @@ public class Guest implements Serializable {
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
+    @OneToOne(mappedBy = "guest")
+    private User user;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "username", referencedColumnName = "username")
+//    private User user;
+
     public Guest() {}
 
     public Guest(String name, String phone, String email, String status) {

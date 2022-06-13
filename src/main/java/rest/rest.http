@@ -59,11 +59,23 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/create/user1
+Content-Type: application/json
+
+{
+  "name": "RestGuest",
+  "phone": "123",
+  "email": "rest@guest.com",
+  "status": "attending",
+  "showList": []
+}
+
+###
 GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1
 Content-Type: application/json
 
 ###
-GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1/show/1
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1/show/2
 Content-Type: application/json
 
 ###
@@ -73,3 +85,6 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/1/shows
 Content-Type: application/json
+
+###
+GET http://localhost:8080/MovieFestivalBackend_war_exploded/api/guest/checkguest/user1

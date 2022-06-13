@@ -79,7 +79,7 @@ public class UserFacade {
         return usernames;
     }
 
-    public JsonArray getAllUsers() throws NotFoundException {
+    public JsonObject getAllUsers() throws NotFoundException {
         List<String> usernames = getAllUsernames();
 
         JsonArray ja = new JsonArray();
@@ -94,7 +94,7 @@ public class UserFacade {
                 jo.addProperty("email", guest.getEmail());
                 jo.addProperty("status", guest.getStatus());
                 if (guest.getFestival() != null) {
-                    jo.addProperty("Festival", guest.getFestival().getName());
+                    jo.addProperty("festival", guest.getFestival().getName());
                 }
             } else {
                 jo.addProperty("name", "");
@@ -105,7 +105,9 @@ public class UserFacade {
             }
             ja.add(jo);
         }
-        return ja;
+        JsonObject mainObject = new JsonObject();
+        mainObject.add("users", ja);
+        return mainObject;
     }
 
     public void grantAdmin() throws NotFoundException {

@@ -37,6 +37,9 @@ public class User implements Serializable {
     @JoinColumn(name = "guest_id", referencedColumnName = "id")
     private Guest guest;
 
+//    @OneToOne(mappedBy = "guest")
+//    private Guest guest;
+
     public List<String> getRolesAsStrings() {
         if (roleList.isEmpty()) {
             return null;

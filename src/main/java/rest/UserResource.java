@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import errorhandling.NotFoundException;
 import facades.FestivalFacade;
 import facades.UserFacade;
@@ -23,7 +24,7 @@ public class UserResource {
     private static final UserFacade FACADE =  UserFacade.getUserFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    @Path("allusernames")
+    @Path("usernames")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsernames() {
@@ -34,14 +35,14 @@ public class UserResource {
                 .build();
     }
 
-    @Path("allusers")
+    @Path("users")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() throws NotFoundException {
-        JsonArray ja = FACADE.getAllUsers();
+        JsonObject jo = FACADE.getAllUsers();
         return Response
                 .ok("SUCCESS")
-                .entity(GSON.toJson(ja))
+                .entity(GSON.toJson(jo))
                 .build();
     }
 }

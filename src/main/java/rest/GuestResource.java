@@ -45,6 +45,20 @@ public class GuestResource {
                 .build();
     }
 
+    @Path("create/{username}")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createWithUser(String jsonContext, @PathParam("username") String username) throws NotFoundException {
+        GuestDTO dto = GSON.fromJson(jsonContext, GuestDTO.class);
+        Guest guest = new Guest(dto);
+        GuestDTO created = new GuestDTO(FACADE.create(guest, username));
+        return Response
+                .ok("SUCCESS")
+                .entity(GSON.toJson(created))
+                .build();
+    }
+
     @Path("{id}")
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
@@ -137,6 +151,20 @@ public class GuestResource {
         return Response
                 .ok("SUCCESS")
                 .entity(GSON.toJson(g))
+                .build();
+    }
+
+    @Path("checkguest/{username}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response checkGuestProfile(@PathParam("username") String username) throws NotFoundException {
+        Guest guest = FACADE.checkGuestProfile(username);
+        if (guest == null) {
+            return Response.ok().build();
+        }
+        return Response
+                .ok("SUCCESS")
+                .entity(GSON.toJson(new GuestDTO(guest)))
                 .build();
     }
 }

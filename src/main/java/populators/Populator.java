@@ -10,7 +10,7 @@ public class Populator {
     }
 
     public static void populate(EntityManagerFactory emf){
-        RolePopulator.populateRoles(emf);
+//        RolePopulator.populateRoles(emf);
         FestivalPopulator.populate(emf);
         GuestPopulator.populate(emf);
         ShowPopulator.populate(emf);
