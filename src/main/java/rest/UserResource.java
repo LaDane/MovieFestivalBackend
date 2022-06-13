@@ -2,6 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import errorhandling.NotFoundException;
 import facades.FestivalFacade;
 import facades.UserFacade;
 import utils.EMF_Creator;
@@ -21,14 +23,25 @@ public class UserResource {
     private static final UserFacade FACADE =  UserFacade.getUserFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    @Path("all")
+    @Path("allusernames")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getAllUsers() {
+    public Response getAllUsernames() {
         List<String> allUsers = FACADE.getAllUsernames();
         return Response
                 .ok("SUCCESS")
                 .entity(GSON.toJson(allUsers))
+                .build();
+    }
+
+    @Path("allusers")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllUsers() throws NotFoundException {
+        JsonArray ja = FACADE.getAllUsers();
+        return Response
+                .ok("SUCCESS")
+                .entity(GSON.toJson(ja))
                 .build();
     }
 }

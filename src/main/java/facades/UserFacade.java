@@ -1,5 +1,8 @@
 package facades;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import entities.Guest;
 import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
@@ -74,6 +77,35 @@ public class UserFacade {
             usernames.add(u.getUserName());
         }
         return usernames;
+    }
+
+    public JsonArray getAllUsers() throws NotFoundException {
+        List<String> usernames = getAllUsernames();
+
+        JsonArray ja = new JsonArray();
+        for (int i = 0; i < usernames.size(); i++) {
+            JsonObject jo = new JsonObject();
+            jo.addProperty("id", i+1);
+            jo.addProperty("username", usernames.get(i));
+            Guest guest = getUserByName(usernames.get(i)).getGuest();
+            if (guest != null) {
+                jo.addProperty("name", guest.getName());
+                jo.addProperty("phone", guest.getPhone());
+                jo.addProperty("email", guest.getEmail());
+                jo.addProperty("status", guest.getStatus());
+                if (guest.getFestival() != null) {
+                    jo.addProperty("Festival", guest.getFestival().getName());
+                }
+            } else {
+                jo.addProperty("name", "");
+                jo.addProperty("phone", "");
+                jo.addProperty("email", "");
+                jo.addProperty("status", "");
+                jo.addProperty("Festival", "");
+            }
+            ja.add(jo);
+        }
+        return ja;
     }
 
     public void grantAdmin() throws NotFoundException {
