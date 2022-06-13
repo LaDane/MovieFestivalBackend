@@ -3,7 +3,6 @@ package facades;
 import Helpers.CreateEntity;
 import Helpers.ResetDB;
 import entities.Festival;
-import entities.RenameMe;
 import errorhandling.NotFoundException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,11 +11,8 @@ import org.junit.jupiter.api.Test;
 import populators.RolePopulator;
 import utils.EMF_Creator;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
