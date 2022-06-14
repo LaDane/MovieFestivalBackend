@@ -7,6 +7,7 @@ import dtos.ShowDTO;
 import entities.Guest;
 import entities.Show;
 import errorhandling.NotFoundException;
+import facades.FestivalFacade;
 import facades.GuestFacade;
 import utils.EMF_Creator;
 
@@ -67,6 +68,22 @@ public class GuestResource {
         GuestDTO dto = GSON.fromJson(jsonContext, GuestDTO.class);
         Guest guest = new Guest(dto);
         guest.setId(id);
+        GuestDTO updated = new GuestDTO(FACADE.update(guest));
+        return Response
+                .ok("SUCCESS")
+                .entity(GSON.toJson(updated))
+                .build();
+    }
+
+    @Path("{id}/festival/{festivalId}")
+    @PUT
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updateWithFestival(@PathParam("id") Long id, @PathParam("festivalId") Long festivalId, String jsonContext) throws NotFoundException {
+        GuestDTO dto = GSON.fromJson(jsonContext, GuestDTO.class);
+        Guest guest = new Guest(dto);
+        guest.setId(id);
+        guest.setFestival(FestivalFacade.getFacade(EMF).getById(festivalId));
         GuestDTO updated = new GuestDTO(FACADE.update(guest));
         return Response
                 .ok("SUCCESS")
