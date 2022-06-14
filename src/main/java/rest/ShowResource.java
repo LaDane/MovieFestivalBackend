@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.ShowDTO;
 import entities.Show;
 import errorhandling.NotFoundException;
+import facades.FestivalFacade;
 import facades.ShowFacade;
 import utils.EMF_Creator;
 
@@ -43,6 +44,21 @@ public class ShowResource {
                 .build();
     }
 
+    @Path("create/festival/{festivalId}")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createWithFestival(@PathParam("festivalId") Long festivalId, String jsonContext) throws NotFoundException {
+        ShowDTO dto = GSON.fromJson(jsonContext, ShowDTO.class);
+        Show show = new Show(dto);
+        show.setFestival(FestivalFacade.getFacade(EMF).getById(festivalId));
+        ShowDTO created = new ShowDTO(FACADE.create(show));
+        return Response
+                .ok("SUCCESS")
+                .entity(GSON.toJson(created))
+                .build();
+    }
+
     @Path("{id}")
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
@@ -51,6 +67,22 @@ public class ShowResource {
         ShowDTO dto = GSON.fromJson(jsonContext, ShowDTO.class);
         Show show = new Show(dto);
         show.setId(id);
+        ShowDTO updated = new ShowDTO(FACADE.update(show));
+        return Response
+                .ok("SUCCESS")
+                .entity(GSON.toJson(updated))
+                .build();
+    }
+
+    @Path("{id}/festival/{festivalId}")
+    @PUT
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updateWithFestival(@PathParam("id") Long id, @PathParam("festivalId") Long festivalId, String jsonContext) throws NotFoundException {
+        ShowDTO dto = GSON.fromJson(jsonContext, ShowDTO.class);
+        Show show = new Show(dto);
+        show.setId(id);
+        show.setFestival(FestivalFacade.getFacade(EMF).getById(festivalId));
         ShowDTO updated = new ShowDTO(FACADE.update(show));
         return Response
                 .ok("SUCCESS")

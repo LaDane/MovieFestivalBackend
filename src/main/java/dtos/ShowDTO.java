@@ -14,6 +14,7 @@ public class ShowDTO {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private List<GuestDTO> guestList = new ArrayList<>();
+    private FestivalDTO festival;
 
     public ShowDTO(String name, String location, LocalDateTime startDateTime, LocalDateTime endDateTime, List<GuestDTO> guestList) {
         this.name = name;
@@ -34,6 +35,9 @@ public class ShowDTO {
         for (Guest g : s.getGuestList()) {
             this.guestList.add(new GuestDTO(g));
         }
+        if (s.getFestival() != null) {
+            this.festival = new FestivalDTO(s.getFestival());
+        }
     }
 
     public Long getId() {return id;}
@@ -42,6 +46,7 @@ public class ShowDTO {
     public LocalDateTime getStartDateTime() {return startDateTime;}
     public LocalDateTime getEndDateTime() {return endDateTime;}
     public List<GuestDTO> getGuestList() {return guestList;}
+    public FestivalDTO getFestival() {return festival;}
 
     public void setId(Long id) {this.id = id;}
     public void setName(String name) {this.name = name;}
@@ -50,4 +55,5 @@ public class ShowDTO {
     public void setEndDateTime(LocalDateTime endDateTime) {this.endDateTime = endDateTime;}
     public void setGuestList(List<GuestDTO> guestList) {this.guestList = guestList;}
     public void addGuest(GuestDTO g) {this.guestList.add(g);}
+    public void setFestival(FestivalDTO festival) {this.festival = festival;}
 }

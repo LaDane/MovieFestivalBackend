@@ -56,6 +56,10 @@ public class Show implements Serializable {
     @ManyToMany
     private List<Guest> guestList = new ArrayList<>();
 
+    @ManyToOne()
+    @JoinColumn(name = "festival_id")
+    private Festival festival;
+
     public Show() {}
 
     public Show(String name, String location, LocalDateTime startDateTime, LocalDateTime endDateTime) {
@@ -63,6 +67,14 @@ public class Show implements Serializable {
         this.location = location;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+    }
+
+    public Show(String name, String location, LocalDateTime startDateTime, LocalDateTime endDateTime, Festival festival) {
+        this.name = name;
+        this.location = location;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.festival = festival;
     }
 
     public Show(ShowDTO s) {
@@ -76,6 +88,9 @@ public class Show implements Serializable {
         for (GuestDTO g : s.getGuestList()) {
             this.guestList.add(new Guest(g));
         }
+        if (s.getFestival() != null) {
+            this.festival = new Festival(s.getFestival());
+        }
     }
 
     public Long getId() {return id;}
@@ -84,6 +99,7 @@ public class Show implements Serializable {
     public LocalDateTime getStartDateTime() {return startDateTime;}
     public LocalDateTime getEndDateTime() {return endDateTime;}
     public List<Guest> getGuestList() {return guestList;}
+    public Festival getFestival() {return festival;}
 
     public void setId(Long id) {this.id = id;}
     public void setName(String name) {this.name = name;}
@@ -92,4 +108,5 @@ public class Show implements Serializable {
     public void setEndDateTime(LocalDateTime endDateTime) {this.endDateTime = endDateTime;}
     public void setGuestList(List<Guest> guestList) {this.guestList = guestList;}
     public void addGuest(Guest g) {this.guestList.add(g);}
+    public void setFestival(Festival festival) {this.festival = festival;}
 }

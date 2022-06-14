@@ -40,18 +40,17 @@ public class Festival implements Serializable {
     @NotNull
     @Column(name = "start_datetime")
     private LocalDateTime startDateTime;
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private java.util.Date startDateTime;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "end_datetime")
     private LocalDateTime endDateTime;
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private java.util.Date endDateTime;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="festival")
     private List<Guest> guestList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="festival")
+    private List<Show> showList = new ArrayList<>();
 
     public Festival() {}
 
@@ -81,6 +80,7 @@ public class Festival implements Serializable {
     public LocalDateTime getStartDateTime() {return startDateTime;}
     public LocalDateTime getEndDateTime() {return endDateTime;}
     public List<Guest> getGuestList() {return guestList;}
+    public List<Show> getShowList() {return showList;}
 
     public void setId(Long id) {this.id = id;}
     public void setName(String name) {this.name = name;}
@@ -89,4 +89,6 @@ public class Festival implements Serializable {
     public void setEndDateTime(LocalDateTime endDateTime) {this.endDateTime = endDateTime;}
     public void setGuestList(List<Guest> guestList) {this.guestList = guestList;}
     public void addGuest(Guest g) {this.guestList.add(g);}
+    public void setShowList(List<Show> showList) {this.showList = showList;}
+    public void addShow(Show s) {this.showList.add(s);}
 }
